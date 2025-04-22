@@ -2,6 +2,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Private from './pages/Private'
+import { RequireAuths } from './contexts/Auth/RequireAuths'
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
         <hr />
       <Routes>
         <Route path="/"  element={<Home />} />
-        <Route path="/private"  element={<Private />} />
+        <Route path="/private"  element={<RequireAuths>{<Private />}</RequireAuths>} />
 
       </Routes>
       </div>
