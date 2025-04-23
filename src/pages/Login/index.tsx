@@ -31,15 +31,12 @@ export const Login = () => {
                 value={email} 
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Digite o seu email" 
-                name="" id="" 
             />
-
             <input 
                 type="password" 
                 value={password} 
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Digite sua password" 
-                name="" id="" 
             />
             <button onClick={handleLogin}>Logar</button>
         </div>

@@ -3,8 +3,17 @@ import './App.css'
 import Home from './pages/Home'
 import Private from './pages/Private'
 import { RequireAuths } from './contexts/Auth/RequireAuths'
+import { useContext } from 'react'
+import { AuthContext } from './contexts/Auth/AuthContext'
 
 function App() {
+
+  const auth = useContext(AuthContext)
+
+  const handleLogout = async () => {
+    await auth.signout();
+
+  }
 
   return (
     <>
@@ -14,6 +23,7 @@ function App() {
           <nav>
             <Link to="/">Home</Link>
             <Link to="/private">Página Privada</Link>
+            {auth.user && <a href='/' onClick={handleLogout}>Sair</a>}
           </nav>
         </header>
         <hr />
