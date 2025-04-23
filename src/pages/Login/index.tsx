@@ -5,7 +5,7 @@ export const Login = () => {
     const [password, setPassword] = useState('')
 
     const handleLogin = () => {
-        
+
     }
 
     return (
@@ -14,7 +14,8 @@ export const Login = () => {
            
             <input 
                 type="text" 
-                value={email} 
+                value={email}
+                onChange={e => setEmail(e.target.value)} 
                 placeholder="Digite o seu email" 
                 name="" id="" 
             />
@@ -22,6 +23,7 @@ export const Login = () => {
             <input 
                 type="password" 
                 value={password} 
+                onChange={e => setPassword(e.target.value)}
                 placeholder="Digite sua password" 
                 name="" id="" 
             />
