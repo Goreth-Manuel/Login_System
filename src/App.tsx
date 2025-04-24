@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Private from './pages/Private'
@@ -7,12 +7,12 @@ import { useContext } from 'react'
 import { AuthContext } from './contexts/Auth/AuthContext'
 
 function App() {
-
-  const auth = useContext(AuthContext)
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await auth.signout();
-
+    navigate('/');
   }
 
   return (
@@ -23,13 +23,13 @@ function App() {
           <nav>
             <Link to="/">Home</Link>
             <Link to="/private">Página Privada</Link>
-            {auth.user && <a href='/' onClick={handleLogout}>Sair</a>}
+            {auth.user && <button onClick={handleLogout}>Sair</button>}
           </nav>
         </header>
         <hr />
       <Routes>
         <Route path="/"  element={<Home />} />
-        <Route path="/private"  element={<RequireAuths>{<Private />}</RequireAuths>} />
+        <Route path="/private"  element={<RequireAuths><Private /></RequireAuths>} />
 
       </Routes>
       </div>
