@@ -9,15 +9,14 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
 
     useEffect(() => {
         const validateToken = async () => {
-            const storageDate = localStorage.getItem('authToken');
-            if(storageDate) {
-                const data = await api.validateToken(storageDate)
+            const storageData = localStorage.getItem('authToken');
+            if(storageData) {
+                const data = await api.validateToken(storageData)
                 if(data.user) {
                     setUser(data.User);
                 }
             }
         }
-
         validateToken()
 
     }, [api])
@@ -33,9 +32,9 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
     }
 
     const signout = async () => {
-        await api.logout();
         setUser(null);
         setToken(' ');
+        await api.logout();
     }
 
     const setToken = (token: string) => {
