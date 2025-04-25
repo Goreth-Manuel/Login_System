@@ -14,9 +14,9 @@ export const Login = () => {
         if(email && password) {
             const isLogged = await auth.signin(email, password);
             if(isLogged) {
-                navigate('/')
+                navigate('/');
             } else {
-                alert('credencias inválidas.');
+                alert("credencias inválidas");
             }
         }
         
@@ -41,5 +41,5 @@ export const Login = () => {
             <button onClick={handleLogin}>Logar</button>
         </div>
       
-    )
+    );
 }

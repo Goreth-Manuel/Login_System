@@ -13,11 +13,11 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
             if(storageData) {
                 const data = await api.validateToken(storageData)
                 if(data.user) {
-                    setUser(data.User);
+                    setUser(data.user);
                 }
             }
         }
-        validateToken()
+        validateToken();
 
     }, [api])
 
@@ -33,7 +33,7 @@ export const AuthProvider = ({children}: {children: JSX.Element}) => {
 
     const signout = async () => {
         setUser(null);
-        setToken(' ');
+        localStorage.removeItem("authToken");
         await api.logout();
     }
 

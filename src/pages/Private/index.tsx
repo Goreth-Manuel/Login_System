@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 
-const Private = () => {
+export const Private = () => {
 
     const auth = useContext(AuthContext)
     return (
         <div>
             <h2>Página Privada</h2>
-            Olá {auth.user?.name}, seja bem vindo
+            Olá {auth.user?.name}, seja bem vinda.
         </div>
     )
 }
-export default Private;
