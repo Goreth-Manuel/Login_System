@@ -13,6 +13,15 @@ export const useApi = () => ({
         return response.data;
     },
 
+    register: async (email: string, password: string) => {
+        return {
+            user: {id: 3, name: 'Goreth', email: 'gorethmanuel@gmial.com'},
+            token: '123456'
+        }
+        const response = await api.post('/register', {email, password});
+        return response.data;
+    },
+
     signin: async (email: string, password: string) => {
         return {
             user: {id: 3, name: 'Goreth', email: 'gorethmanuel@gmial.com'},
