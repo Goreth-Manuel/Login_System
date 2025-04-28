@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auths } from "../../firebaseConfig";
+import { db } from "../../firebaseConfig";
+import { uid } from "uid";
+import { set, ref } from "firebase/database";
 
 export const Register = () => {
   const auth = useContext(AuthContext);
@@ -11,34 +12,33 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [
-    createUserWithEmailAndPassword,
-    loading,
-  ] = useCreateUserWithEmailAndPassword(auths);
+  // const handleRegister = async () => {
+  //   if (email && password) {
+  //     try {
+  //         // Após cadastrar, já faz o login
+  //         const isRegistered = await auth.signin(email, password);
+  //         if (isRegistered) {
+  //           navigate('/');
+  //         }
+  //     } catch (e) {
+  //       console.error('Erro ao cadastrar:', e);
+  //       alert('Erro ao cadastrar. Tente novamente.');
+  //     }
+  //   } else {
+  //     alert('Preencha o e-mail e a senha.');
+  //   }
+  // };
 
   const handleRegister = async () => {
-    if (email && password) {
-      try {
-        const user = await createUserWithEmailAndPassword(email, password);
-        if (user) {
-          // Após cadastrar, já faz o login
-          const isLogged = await auth.signin(email, password);
-          if (isLogged) {
-            navigate('/');
-          }
-        }
-      } catch (e) {
-        console.error('Erro ao cadastrar:', e);
-        alert('Erro ao cadastrar. Tente novamente.');
-      }
-    } else {
-      alert('Preencha o e-mail e a senha.');
-    }
+    const uuid = uid();
+    set(ref(db, `/{uuid}`), {
+      email,
+      uuid,
+    });
+    setEmail('');
   };
 
-  if (loading) {
-    return <p>Carregando...</p>;
-  }
+ 
   return (
     <div>
       <h2>Cadastro</h2>

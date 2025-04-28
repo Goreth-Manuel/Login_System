@@ -30,7 +30,7 @@ function App() {
       <hr />
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/cadastro" element={<RequireAuths><Register /></RequireAuths>} />
+      <Route path="/cadastro" element={<Register />} />
       <Route path="/private" element={<RequireAuths><Private /></RequireAuths>} />
     </Routes>
     </div>
