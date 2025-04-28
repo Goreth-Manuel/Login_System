@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../firebaseConfig";
-import { uid } from "uid";
+import { auths, db } from "../../firebaseConfig";
+
 import { set, ref } from "firebase/database";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export const Register = () => {
-  const auth = useContext(AuthContext);
+  // const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -30,18 +30,42 @@ export const Register = () => {
   // };
 
   const handleRegister = async () => {
-    const uuid = uid();
-    set(ref(db, `/{uuid}`), {
-      email,
-      uuid,
-    });
-    setEmail('');
+    if (!email || !password) {
+      alert('Preencha o e-mail e a senha.');
+      return;
+    }
+  
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auths, email, password);
+      const userId = userCredential.user.uid;
+  
+      const userData = {
+        name: "Pedro Franco",
+        email: email,
+        phone: "244 989456767",
+      };
+      
+      await set(ref(db, `/${userId}`), userData);
+  
+      setEmail('');
+      setPassword('');
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error);
+      alert('Erro ao cadastrar. Verifique o email e senha.');
+    }
   };
-
+  
  
   return (
     <div>
       <h2>Cadastro</h2>
+      {/* <input 
+        type="text" 
+        value={name} 
+        onChange={e => setEmail(e.target.value)}
+        placeholder="Digite o seu email" 
+      /> */}
       <input 
         type="text" 
         value={email} 
